@@ -1,0 +1,41 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+        <h1 class="main-title"><%= title %></h1>
+    <table>
+        <thead>
+            <tr>
+                <th><a href="/createCategory" class="btn">Ny kategori</a></th>
+                <th>Navn</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(categories == 0) { %>
+                <p>Der er ingen kategorier at vise</p>
+            <tr>
+                <td>
+                    <a href="">Rediger</a>
+                    <a href="">Slet</a>
+                </td>
+                <td>-------</td>
+                <td>-------</td>
+            </tr>
+            <% } %>
+            <% categories.forEach(category => { %>
+            <tr>
+                <td>
+                    <a href="/editCategory/<%= category.id %>">Rediger</a>
+                    <a href="/deleteCategory/<%= category.id %>">Slet</a>
+                </td>
+                <td><%= category.name %></td>
+                <td><%= category.description %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</main>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>
+

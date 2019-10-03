@@ -1,0 +1,43 @@
+<div class="choosen-image">
+    <a href="" class="btn imagePopUp">Mediabibliotek</a>
+    <a href="" class="btn uploadPopUp">Upload billede</a>
+    <img id="imagePreview" src="/images/default-placeholder-200x200.png" alt="">
+</div>
+
+<div class="image-picker">
+    <% images.forEach(image => { %>
+        <label class="image-pick">
+            <%= image.name %>
+            <img src="/images/uploads/<%= image.name %>" alt="">
+            <input class="imageCheckers" type="radio" name="chooseImage" value="<%= image.id %>" data-imgname="<%= image.name %>">
+        </label>
+    <% }); %>
+</div>
+
+<script>
+    const imagePopUp = document.querySelector('.imagePopUp');
+
+    const imageList = document.querySelector('.image-picker');
+
+
+    imagePopUp.addEventListener('click', (e) => {
+        e.preventDefault();
+        imageList.classList.add('show');        
+    });
+
+
+    const images = document.querySelectorAll('.imageCheckers');
+    const preview = document.querySelector('#imagePreview');
+
+        for (let i = 0; i < images.length; i++) {
+
+            images[i].addEventListener('click', () => {                
+                if(images[i].checked == true) {
+                    imageList.classList.remove('show');
+                    preview.src = `/images/uploads/${images[i].dataset.imgname}`;
+                }
+            })
+            
+        }
+     
+</script>

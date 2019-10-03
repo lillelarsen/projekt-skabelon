@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/images.controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/images.controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const db = require('../config/mysql');
+const fs = require('fs');
+
+const { join } = require('path');
+const uploadDir = '../public/images/uploads/';
+/**
+ * @module controller/images
+ */
+
+ /**
+ * Denne funktion retunerer upload-image.ejs
+ * @params {Object} req
+ * @params {Function} res
+ * @params {Function} next
+ */
+exports.showUploadForm = function(req, res, next) {
+    res.render('admin/upload-image', {title: 'Upload et billede'});
+}
+
+ /**
+ * Denne funktion poster billede til database + public/images
+ * @params {Object} req
+ * @params {Function} res
+ * @params {Function} next
+ */
+exports.uploadImage = async function(req, res, next) {
+    if (!/image/.test(req.files.billede.type)) {
+        return res.send('Den uploadede fil er ikke et billede');
+    }
+    try {
+        const data = fs.readFileSync(req.files.billede.path);
+        const newFileName = await Date.now() + '_' + req.files.billede.name;
+        fs.writeFileSync(join(__dirname, uploadDir + newFileName), data);
+
+        const result = await db.query('INSERT INTO images SET name = ?', [newFileName]);
+        
+        res.redirect('/images');
+    } catch (error) {
+        console.log(error);
+        return next(error);
+    }
+}
+
+ /**
+ * Denne funktion viser liste over billeder via images.ejs
+ * @params {Object} req
+ * @params {Function} res
+ * @params {Function} next
+ */
+exports.showImages = async function(req, res, next) {
+    try {
+        const imagesSQL = `SELECT id, name FROM images`;
+        const [rows] = await db.query(imagesSQL)
+        res.render('admin/list-images', { 'images': rows, title: 'Billeder' });
+    } catch (error) {
+        console.log(error);
+        return next(error);
+    }
+}
+
+ /**
+ * Denne funktion viser edit via edit-.ejs
+ * @params {Object} req
+ * @params {Function} res
+ * @params {Function} next
+ */
+exports.editFormImage = async function(req, res, next) {
+    try {
+        if (req.query.action === 'delete') {
+            return next();
+        }
+        const imagesSQL = `SELECT id, name FROM images WHERE id = :id`;
+        const [rows] = await db.query(imagesSQL, { id: req.params.id });
+        
+        res.render('admin/edit-image', { 'image': rows[0], 'title': 'Rediger billede' });
+    } catch (error) {
+        return next(error);
+    }
+    
+}
+
+/**
+ * Denne funktion opdaterer image via /images/:id
+ * @params {Object} req
+ * @params {Function} res
+ * @params {Function} next
+ */
+exports.editImage = async function(req, res, next) {
+    if (!/image/.test(req.files.billede.type)) {
+        return res.send('Den uploadede fil er ikke et billede');
+    }
+    try {
+        const data = fs.readFileSync(req.files.billede.path);
+        const newFileName = Date.now() + '_' + req.files.billede.name;
+        fs.writeFileSync(join(__dirname, uploadDir + newFileName), data);
+        fs.unlinkSync(join(__dirname, uploadDir + req.fields.prevImage));
+        const result = await db.query('UPDATE images SET name = :name WHERE id = :id', {name: newFileName, id:req.params.id});
+        res.redirect('/images/' + req.params.id);
+    } catch (error) {
+        return next(error);
+    }
+}
+
+/**
+ * Denne funktion sletter image via /images/:id
+ * @params {Object} req
+ * @params {Function} res
+ * @params {Function} next
+ */
+exports.deleteImage = async function(req, res, next) {
+    try {
+        const imageSQL = `DELETE FROM images WHERE id = :id`;
+        const [rows] = await db.query(imageSQL, {id: req.params.id});
+        fs.unlinkSync(join(__dirname, uploadDir + req.query.image));
+        res.redirect('/images');
+    } catch (error) {
+        return next(error);
+    }
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-controller_categories.html">controller/categories</a></li><li><a href="module-controller_home.html">controller/home</a></li><li><a href="module-controller_images.html">controller/images</a></li><li><a href="module-controller_login.html">controller/login</a></li><li><a href="module-controller_products.html">controller/products</a></li><li><a href="module-controller_signup.html">controller/signup</a></li><li><a href="module-controller_users.html">controller/users</a></li><li><a href="module-route_main.html">route/main</a></li><li><a href="module-route_profile.html">route/profile</a></li><li><a href="module-route_signup.html">route/signup</a></li><li><a href="module-route_users.html">route/users</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Aug 22 2019 12:01:11 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

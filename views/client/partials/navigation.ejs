@@ -1,0 +1,19 @@
+    <nav class="navigation">
+        <ul>
+            <li>
+                <a href="/">Forside</a>
+            </li>
+            <li>
+                <a href="/produkter?page=1&items=10">Produkter</a>
+            </li>
+            <li>
+                <a href="/produkter/0">Kategorier</a>
+            </li>
+            <li>
+                <%- isLoggedIn ? "<a href='/logout'>Log ud</a>" : "<a href='/login'>Log ind</a>" %>
+            </li>
+            <li>
+                <%- isLoggedIn ? "<a href='/profile/'>Profil</a>" : "<a href='/signup'>Registrér bruger</a>" %>
+            </li>
+        </ul>
+    </nav>

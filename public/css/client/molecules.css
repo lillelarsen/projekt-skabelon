@@ -1,0 +1,6 @@
+.product {
+    width: 20vw;
+    height: 20vw;
+    background-color: var(--primary-text);
+    margin: 1em;
+}

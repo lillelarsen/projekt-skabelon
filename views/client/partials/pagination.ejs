@@ -1,0 +1,55 @@
+<% if(typeof current_page != 'undefined' && typeof total_pages != 'undefined' ) { %>
+    <label for="productsPerSite">Produkter pr. side</label>​
+    <select name="productsPerSite" id="productsPerSite" class="itemsPerPage">
+         <option value="5" <%= (itemsPerPage == 5 ? 'selected' : '') %>>5</option>
+         <option value="10" <%= (itemsPerPage == 10 ? 'selected' : '') %>>10</option>
+         <option value="15" <%= (itemsPerPage == 15 ? 'selected' : '') %>>15</option>
+         <option value="20" <%= (itemsPerPage == 20 ? 'selected' : '') %>>20</option>
+    </select>
+
+    <ul class="pagination">
+    ​
+       <!-- deaktiver tilbage linket hvis det er den første side der er aktiv -->
+       <% if(current_page > 1) { %>
+         <li class="paginationBtn <%= (current_page > 1 ? '' : 'disabled') %>">
+            <a href="?name=<%= name %>&globalsearch=<%= globalsearch %>&category=<%= category %>&minimumprice=<%= minimumprice %>&maximumprice=<%= maximumprice %>&page=<%= current_page -1 %>&items=<%= itemsPerPage %>">&lt;</a>
+         </li>
+      <% } else { %>
+         <li class="paginationBtn">
+               &lt;
+         </li>
+      <% } %>
+    ​
+       <!-- udskriv det antal links der er behov for, og fremhæv den nuværende side -->
+       <% for(let i = 0; i < total_pages; i++){%>
+       <li class="paginationBtn <%= (i+1) == current_page ? 'active': '' %>">
+          <a href="?name=<%= name %>&globalsearch=<%= globalsearch %>&category=<%= category %>&minimumprice=<%= minimumprice %>&maximumprice=<%= maximumprice %>&page=<%= i+1 %>&items=<%= itemsPerPage %>"><%= i+1 %></a>
+       </li>
+       <% } %>
+    ​
+      <% if(current_page < total_pages) { %>
+       <!--  deaktiver for det sidste link hvis det er den sidste side der vises -->
+       <li class="<%= (current_page < total_pages ? '' : 'disabled') %> paginationBtn">
+          <a href="?name=<%= name %>&globalsearch=<%= globalsearch %>&category=<%= category %>&minimumprice=<%= minimumprice %>&maximumprice=<%= maximumprice %>&page=<%= current_page +1 %>&items=<%= itemsPerPage %>">&gt;</a>
+       </li>
+    ​  <% } else { %>
+         <li class="paginationBtn">
+               &gt;
+         </li>
+      <% } %>
+    </ul>
+    ​
+    <script>
+         let itemsCount = document.querySelectorAll('.itemsPerPage');
+         itemsCount.forEach(element => {
+            element.addEventListener('change', function (event) {
+               console.log()
+               var url = new URL(window.location.href);
+               url.searchParams.set('items', element.value);
+               url.searchParams.set('page', 1);
+               window.location.replace(url);
+               //window.location.replace(`/produkter?page=1&items=${element.value}`);
+            });
+         });
+      </script>
+<% } %>

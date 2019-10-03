@@ -1,0 +1,30 @@
+<nav class="navigation">
+    <ul>
+        <li>
+            <a class="admin-link-text" href="/admin">Forside</a>
+        </li>
+        <li>
+            <a class="admin-link-text" href="/users">Brugere</a>
+        </li>
+        <li>
+            <a class="admin-link-text" href="/roles">Roller</a>
+        </li>
+        <li>
+            <a class="admin-link-text" href="/products">Produkter</a>
+        </li>
+        <li>
+            <a class="admin-link-text" href="/categories">Kategorier</a>
+        </li>
+        <li>
+            <a class="admin-link-text" href="/images">Media</a>
+        </li>
+
+        <hr>
+        <li>
+            <%- isLoggedIn ? "<a href='/logout'>Log ud</a>" : "<a href='/login'>Log ind</a>" %>
+        </li>
+        <li>
+            <%- isLoggedIn ? "<a href='/profile/'>Profil</a>" : "<a href='/signup'>Registrér bruger</a>" %>
+        </li>
+    </ul>
+</nav>

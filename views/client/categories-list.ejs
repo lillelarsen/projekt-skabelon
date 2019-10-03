@@ -1,0 +1,24 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+        <h1 class="main-title"><%= title %></h1>
+            <% if(products.length == 0) { %>
+                <p>Der er ingen produkter at vise</p>
+            <% } %>
+                <a href="/produkter/0">Tilbage til kategorier</a>
+            <% products.forEach(product => { %>
+                <article class="product">
+                    <a href="/produkt/<%= product.productid %>">
+                    <img class="list-product-image" src="images/uploads/<%= product.image %>" alt="">
+                    <%= product.name %>
+                    </a>
+                </article>
+            <% }); %>
+    <div class="pagination">
+        <a href="" class="btn">Forrige side</a>
+        <a href="" class="btn">Næste side</a>
+    </div>
+</main>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

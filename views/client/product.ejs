@@ -1,0 +1,22 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+        <article>
+                <h1 class="main-title"><%= title %></h1>
+                <%= product.name %>"
+                <%= product.description %>
+                <%= product.category %>
+        </article>
+
+        <% %>
+        <h2>Du er måske interreseret i disse produkter</h2>
+        <% products.forEach(product => { %>
+                <div class="other-products">
+                        <%= product.name %>" 
+                </div>
+                 
+        <% }); %>
+</main>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

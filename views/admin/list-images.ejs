@@ -1,0 +1,20 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+    <h1 class="main-title"><%= title %></h1>
+    <a href="/upload" class="btn">Upload</a>
+    <section class="image-list">
+        <% images.forEach(image => { %>
+            <div class="image-container">
+                <div class="image"><img src="/images/uploads/<%= image.name %>" alt=""></div>
+                <div class="image-handlers">
+                    <a class="btn" href="/images/<%= image.id %>/?action=delete&image=<%= image.name %>">slet</a>
+                    <a class="btn" href="/images/<%= image.id %>">rediger</a>
+                </div>
+            </div>
+        <% }); %>
+    </section>
+</main>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

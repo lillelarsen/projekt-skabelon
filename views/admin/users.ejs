@@ -1,0 +1,29 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+        <h1 class="main-title"><%= title %></h1>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Navn</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+            <tr>
+                <td>
+                    <a href="/editUser/<%= user.id %>">Rediger</a>
+                    <a href="/deleteUser/<%= user.id %>">Slet</a>
+                </td>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</main>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

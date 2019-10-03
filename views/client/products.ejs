@@ -1,0 +1,58 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+        <h1 class="main-title"><%= title %></h1>
+        <form action="" method="get">
+            <fieldset>
+                <label for="name">Navn: </label>
+                <input type="text" name="name" id="name">
+            </fieldset>
+            <fieldset>
+                <label for="globalsearch">Fritekst: </label>
+                <input type="text" name="globalsearch" id="globalsearch">
+            </fieldset>
+            <fieldset>
+                <label for="category">Kategori: </label>
+                <select name="category" id="category">
+                        <option value="" selected >Søg kategori</option>
+                    <% categories.forEach(category => { %>
+                        <option value="<%= category.id %>"><%= category.name %></option>
+                    <% }) %>
+                </select>
+            </fieldset>
+            <fieldset>
+                <label for="minimumprice">Pris minimum</label>
+                <input type="range" name="minimumprice" min="0" value="0" id="minimumprice" max="9999" oninput="minPriceOutputId.value = minimumprice.value">
+                <input id="minPriceOutputId" value="0" oninput="minimumprice.value = minPriceOutputId.value"></input>
+            </fieldset>
+            <fieldset>
+                <label for="category">Pris maximum</label>
+                <input type="range" name="maximumprice" min="0" value="9999" id="maximumprice" max="10000" oninput="maxPriceOutputId.value = maximumprice.value">
+                <input id="maxPriceOutputId" value="9999" oninput="maximumprice.value = maxPriceOutputId.value"></input>
+            </fieldset>
+            <input type="hidden" name="page" value="<%= page_number %>">
+            <input type="hidden" name="items" value="<%= itemsPerPage %>">
+            <button type="submit">SØG...</button>
+            <a href="/produkter" class="btn">Nulstil</a>
+        </form>
+            <% if(products.length == 0) { %>
+                <p>Der er ingen produkter at vise</p>
+            <% } %>
+            <% products.forEach((product) => { %>
+                <article class="product">
+                    <a href="/produkt/<%= product.id %>">
+                    <img class="list-product-image" src="images/uploads/<%= product.image %>" alt="">
+                    <%= product.name %>
+                    </a>
+                </article>
+            <% }); %>
+            <% include ./partials/pagination.ejs %>
+</main>
+
+<script>
+
+</script>
+
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

@@ -1,0 +1,76 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+        <h1 class="main-title"><%= title %></h1>
+    <form method="post">
+        <h2>Sitets indstillinger</h2>
+        <fieldset>
+            <label for="sitename">Navn</label>
+            <input type="text" name="sitename" id="sitename" value="<%= global.sitename %>">
+        </fieldset>
+        <fieldset>
+            <label for="sitedescription">Sitets beskrivelse</label>
+            <textarea name="sitedescription" id="sitedescription"><%= global.sitedescription %></textarea>
+        </fieldset>
+        <fieldset>
+            <img src="/images/site-content/<%= global.sitelogo %>" alt="">
+            <label for="sitelogo">Sitets logo - Vælg en fil</label>
+            <input type="file" name="sitelogo" id="sitelogo" class="sitelogoChange" data-current-image="<%= global.sitelogo %>">
+        </fieldset>
+        <hr>
+        <h2>Forside indstillinger</h2>
+        <fieldset>
+            <label for="maintext">Forside beskrivelse</label>
+            <textarea name="maintext" id="maintext"><%= global.maintext %></textarea>
+        </fieldset>
+        <fieldset>
+            <img src="/images/site-content/<%= global.mainimage %>" alt="">
+            <label for="mainimage">Forside baggrund - Vælg en fil</label>
+            <input type="file" name="mainimage" id="mainimage" class="mainimageChange" data-current-image="<%= global.mainimage %>">
+        </fieldset>
+        <button type="submit">Gem</button>
+    </form>
+</main>
+
+<script>
+const logoInput = document.querySelector('.sitelogoChange');
+logoInput.addEventListener('change', function (event) {
+	const formData = new FormData();
+    formData.append('photo', this.files[0]);    
+    formData.append('prevImg', this.dataset.currentImage);
+    
+	fetch('/admin/sitelogo', {
+		method: 'PATCH',
+		body: formData
+	})
+		.then(response => {
+			if (response.status === 200) return response.json();
+		})
+		.then(data => {
+			window.location.href = "/admin";
+		});
+});
+</script>
+
+<script>
+    const mainImageInput = document.querySelector('.mainimageChange');
+    mainImageInput.addEventListener('change', function (event) {
+        const formData = new FormData();
+        formData.append('photo', this.files[0]);    
+        formData.append('prevImg', this.dataset.currentImage);
+        
+        fetch('/admin/mainimage', {
+            method: 'PATCH',
+            body: formData
+        })
+            .then(response => {
+                if (response.status === 200) return response.json();
+            })
+            .then(data => {
+                window.location.href = "/admin";
+            });
+    });
+</script>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

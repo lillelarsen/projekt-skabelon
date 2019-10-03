@@ -1,0 +1,42 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+        <h1 class="main-title"><%= title %></h1>
+    <% include ./partials/pagination.ejs %>
+    <table>
+        <thead>
+            <tr>
+                <th><a href="/createProduct" class="btn">Nyt produkt</a></th>
+                <th>Billede</th>
+                <th>Navn</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(products.length == 0) { %>
+                <p>Der er ingen produkter at vise</p>
+            <tr>
+                <td>
+                    <a href="">Rediger</a>
+                    <a href="">Slet</a>
+                </td>
+                <td>-------</td>
+                <td>-------</td>
+            </tr>
+            <% } %>
+            <% products.forEach(product => { %>
+            <tr>
+                <td>
+                    <a href="/editProduct/<%= product.id %>">Rediger</a>
+                    <a href="/deleteProduct/<%= product.id %>">Slet</a>
+                </td>
+                <td><img class="list-product-image" src="images/uploads/<%= product.image %>" alt=""></td>
+                <td><%= product.name %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <% include ./partials/pagination.ejs %>
+</main>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

@@ -1,0 +1,19 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+        <h1 class="main-title"><%= title %></h1>
+    <form method="post">
+        <fieldset>
+            <label for="name">Navn</label>
+            <input type="text" name="name" id="name" value="<%= category.name %>">
+        </fieldset>
+        <fieldset>
+            <label for="description">description</label>
+            <textarea name="description" id="description"><%= category.description %></textarea>
+        </fieldset>
+        <button type="submit">Gem</button>
+    </form>
+</main>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

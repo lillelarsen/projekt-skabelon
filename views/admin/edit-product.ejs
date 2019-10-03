@@ -1,0 +1,30 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+        <h1 class="main-title"><%= title %></h1>
+    <form method="post">
+        <fieldset>
+                <% include ./partials/image-picker.ejs %>
+        </fieldset>
+        <fieldset>
+            <label for="name">Brugernavn</label>
+            <input type="text" name="name" id="name" value="<%= product.name %>">
+        </fieldset>
+        <fieldset>
+            <label for="description">description</label>
+            <textarea name="description" id="description"><%= product.description %></textarea>
+        </fieldset>
+        <fieldset>
+            <label for="category">category</label>
+            <select name="category" id="category">
+                <% categories.forEach(category => { %>
+                    <option value="<%= category.id %>" <%= (product.fk_category==category.id ? 'selected' : '' ) %> ><%= category.name %></option>
+                <% }) %>
+            </select>
+        </fieldset>
+        <button type="submit">Gem</button>
+    </form>
+</main>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

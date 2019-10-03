@@ -1,0 +1,73 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+    <h1 class="main-title"><%= title %></h1>
+    <form method="post" id="signupForm">
+        <fieldset>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="<%= (messages && messages.email) ? messages.email : "" %>">
+            <span id="emailError" style="color: red;">
+                <%= (messages && messages.emailError) ? messages.emailError : "" %>
+            </span>
+        </fieldset>
+        <fieldset>
+            <label for="username">Brugernavn</label>
+            <input type="text" name="username" id="username" value="<%= (messages && messages.username) ? messages.username : "" %>">
+            <span id="usernameError" style="color: red;">
+                    <%= (messages && messages.usernameError) ? messages.usernameError : "" %>
+            </span>
+        </fieldset>
+        <fieldset>
+            <label for="">Adgangskode</label>
+            <input type="password" name="password" id="password">
+            <span id="passwordError" style="color: red;"></span>
+        </fieldset>
+        <button type="submit">Opret</button>
+    </form>
+</main>
+<script>
+
+function validateInput(regExp, input, errorPlaceholder, errorMsg) {
+    if (regExp.test(input.value)) {
+        errorPlaceholder.innerHTML = "";
+        return true;        
+    } else {
+        errorPlaceholder.innerHTML = errorMsg;
+        return false;
+    }
+}
+
+const form = document.getElementById('signupForm');
+form.addEventListener("submit", function (e) {
+    const email = document.getElementById("email");
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    
+    const emailErr = document.getElementById("emailError");
+    const usernameErr = document.getElementById("usernameError");
+    const passwordErr = document.getElementById("passwordError");
+    
+    let success = true;
+    
+    e.preventDefault();
+
+    // const emailEx = /@/g;
+    const emailEx = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    const userEx = /\d/g;
+
+    if (!validateInput(emailEx, email, emailErr, "mail er ikke udfyldt korrekt")
+    || !validateInput(userEx, username, usernameErr, "Brugernavn er ikke udfyldt korrekt")
+    || !validateInput(/.*\S.*/g, password, passwordErr, "password er ikke udfyldt korrekt")) {
+        success = false;
+    }
+  
+    if(success) {
+        form.submit();
+    }
+   
+})
+
+</script>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

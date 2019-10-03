@@ -1,0 +1,19 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+        <h1 class="main-title"><%= title %></h1>
+            <% if(categories.length == 0) { %>
+                <p>Der er ingen produkter at vise</p>
+            <% } %>
+
+            <% categories.forEach(category => { %>
+                <article class="product">
+                    <a href="/produkter/<%= category.id %>">
+                    <%= category.name %>
+                    </a>
+                </article>
+            <% }); %>
+</main>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

@@ -1,0 +1,19 @@
+<% include ./partials/head.ejs %>
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+<main class="main">
+    <h1 class="main-title"><%= title %></h1>
+    <form method="post">
+        <fieldset>
+            <label for="username">Brugernavn</label>
+            <input type="text" name="username" id="username">
+        </fieldset>
+        <fieldset>
+            <label for="">Adgangskode</label>
+            <input type="password" name="password" id="password">
+        </fieldset>
+        <button type="submit">log ind</button>
+    </form>
+</main>
+<% include ./partials/footer.ejs %>
+<% include ./partials/after-footer.ejs %>

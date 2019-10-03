@@ -1,0 +1,44 @@
+/* standards */
+fieldset {
+    border: none;
+    padding: 0.5em 0;
+}
+
+/* molecules */
+.image-picker,
+.imageUploader {
+    display: none;
+}
+.show {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    background-color: var(--white-color);
+    padding: 1em;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    box-shadow: 2px 2px 2px 2px var(--black-color);
+}
+.image-container {
+    width: 300px;
+    background: var(--white-color);
+    padding: 1em;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+
+.choosen-image {
+    display: flex;
+    flex-direction: column;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+}
